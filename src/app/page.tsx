@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Home() {
   return (
@@ -9,9 +11,11 @@ export default function Home() {
       <p className="mt-4 text-lg">
         This is a sample application demonstrating a multitenant architecture.
       </p>
-      <Button variant="secondary">hola mundo</Button>
+      <Button variant="elevated">hola mundo</Button>
       <Input placeholder="Type something..." className="mt-4 w-64" />
-      <Progress />
+      <Progress value={50} />
+      <Textarea placeholder="hola" />
+      <Checkbox className="mt-4" />
     </main>
   );
 }
