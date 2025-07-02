@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 import { SubcategoryMenu } from "./subcategory-menu";
-import { CustomCategory } from "@/modules/categories/types";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  category: CustomCategory;
+  category: CategoriesGetManyOutput[1];
   isActive?: boolean;
   isNavigationHovered?: boolean;
-};
+}
 
 export const CategoryDropdown = ({
   category,
@@ -25,7 +25,6 @@ export const CategoryDropdown = ({
 
   const onMouseEnter = () => {
     if (category.subcategories) {
-      console.log("hello")
       setIsOpen(true);
     }
   };
@@ -45,12 +44,11 @@ export const CategoryDropdown = ({
           className={cn(
             "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
             isActive && !isNavigationHovered && "bg-white border-primary",
-            isOpen && "bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px]"
+            isOpen &&
+              "bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px]"
           )}
         >
-          <Link
-            href={`/${category.slug === "all" ? "" : category.slug}`}
-          >
+          <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
             {category.name}
           </Link>
         </Button>
@@ -64,10 +62,7 @@ export const CategoryDropdown = ({
         )}
       </div>
 
-      <SubcategoryMenu
-        category={category}
-        isOpen={isOpen}
-      />
+      <SubcategoryMenu category={category} isOpen={isOpen} />
     </div>
   );
 };
