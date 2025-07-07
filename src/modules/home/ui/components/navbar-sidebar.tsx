@@ -48,7 +48,7 @@ export const NavbarSidebar = ({
 
           {session?.user ? (
             <Link
-              href="/dashboard"
+              href="/admin"
               className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
               onClick={() => onOpenChange(false)}
             >
