@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ListFilterIcon, SearchIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 
+import { useTRPC } from "@/trpc/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -12,6 +15,9 @@ interface Props {
 
 export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
   const [searchValue, setSearchValue] = useState(defaultValue || "");
+
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -40,6 +46,14 @@ export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
       >
         <ListFilterIcon />
       </Button>
+      {session.data?.user && (
+        <Button asChild variant="elevated">
+          <Link prefetch href="/library">
+            <BookmarkCheckIcon />
+            Library
+          </Link>
+        </Button>
+      )}
     </div>
   );
 };

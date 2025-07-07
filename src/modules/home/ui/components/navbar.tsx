@@ -5,8 +5,10 @@ import { useState } from "react";
 import { MenuIcon } from "lucide-react";
 import { Poppins } from "next/font/google";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 
 import { NavbarSidebar } from "./navbar-sidebar";
@@ -49,6 +51,9 @@ export const Navbar = () => {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
+
   return (
     <nav className="h-20 flex border-b justify-between font-medium bg-white">
       <Link href="/" className="pl-6 flex items-center">
@@ -60,6 +65,7 @@ export const Navbar = () => {
       <NavbarSidebar
         items={navbarItems}
         open={isSidebarOpen}
+        session={session.data}
         onOpenChange={setIsSidebarOpen}
       />
 
@@ -75,7 +81,7 @@ export const Navbar = () => {
         ))}
       </div>
 
-      {false ? (
+      {session.data?.user ? (
         <div className="hidden lg:flex">
           <Button
             asChild
