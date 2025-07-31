@@ -6,6 +6,7 @@ import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 import { useTRPC } from "@/trpc/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { CategoriesSidebar } from "./categories-sidebar";
 
 interface Props {
   disabled?: boolean;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchValue, setSearchValue] = useState(defaultValue || "");
 
   const trpc = useTRPC();
@@ -29,6 +31,7 @@ export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
 
   return (
     <div className="flex items-center gap-2 w-full">
+      <CategoriesSidebar onOpenChange={setIsSidebarOpen} open={isSidebarOpen} />
       <div className="relative w-full">
         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
         <Input
@@ -42,7 +45,7 @@ export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
       <Button
         variant="elevated"
         className="size-12 shrink-0 flex lg:hidden"
-        onClick={() => {}}
+        onClick={() => setIsSidebarOpen(true)}
       >
         <ListFilterIcon />
       </Button>
